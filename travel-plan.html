@@ -721,7 +721,7 @@
     .schedule-summary::after {
       content: '▾';
       font-size: 0.7rem;
-      transition: transform 0.2s;
+      transition: transform 0.25s ease;
       display: inline-block;
     }
 
@@ -734,21 +734,35 @@
       background: #efefef;
     }
 
+    /* Smooth expand/collapse via grid trick */
+    .schedule-note-wrap {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .schedule-details[open] .schedule-note-wrap {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
     .schedule-note {
+      overflow: hidden;
+      min-height: 0;
       margin-top: 8px;
       font-size: 0.82rem;
       color: #666;
       line-height: 1.65;
-      padding: 10px 12px;
+      padding: 0 12px;
       background: #fafafa;
       border-left: 3px solid #e0e0e0;
       border-radius: 0 8px 8px 0;
-      animation: slideDown 0.18s ease;
+      transition: padding 0.3s ease;
     }
 
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-4px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .schedule-details[open] .schedule-note {
+      padding: 10px 12px;
     }
 
     /* Arrival Notice */
@@ -1072,7 +1086,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">09:00</p>
                   <p class="schedule-place">你抵达罗马 FCO 机场</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">在机场等老婆。可以在航站楼休息、逛免税店、换 SIM 卡或喝杯咖啡</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">在机场等老婆。可以在航站楼休息、逛免税店、换 SIM 卡或喝杯咖啡</div></div></details>
                   <span class="schedule-tag tag-tip">⏳ 等候 4.5 小时</span>
                 </div>
               </li>
@@ -1081,11 +1095,11 @@
                 <div class="schedule-content">
                   <p class="schedule-time">13:30 – 15:10</p>
                   <p class="schedule-place">老婆抵达 FCO，汇合 → 酒店</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">13:30 老婆落地，过海关取行李约 30min<br/>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">13:30 老婆落地，过海关取行李约 30min<br/>
                     14:10 Leonardo Express → Termini（32min，€14.5/人）<br/>
                     14:50 地铁 B 线 → Bologna（8min，€1.5/人）→ B1 线 → Sant'Agnese 站（2min）<br/>
                     15:10 步行 5min 到酒店放行李<br/>
-                    <strong>两人交通合计 €32</strong></div></details>
+                    <strong>两人交通合计 €32</strong></div></div></details>
                   <div class="schedule-tags">
                     <span class="schedule-tag tag-tip">🚄 全程约 1 小时</span>
                     <a href="https://www.xiaohongshu.com/explore/68ea00ab0000000004006b86?app_platform=android&ignoreEngage=true&app_version=9.24.0&share_from_user_hidden=true&xsec_source=app_share&type=normal&xsec_token=CBImWBQ1NAKPySayvEieLh91nynMUul2J07Q4n63C2LFQ=&author_share=1&xhsshare=&shareRedId=ODs0NTtINTs2NzUyOTgwNjY1OTdKRkc_&apptime=1775375855&share_id=c7d5e4752b064470b0ce2ef2b443a504&share_channel=wechat" target="_blank" class="booking-link-inline">📕 机场快线攻略 →</a>
@@ -1097,7 +1111,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">15:15</p>
                   <p class="schedule-place">酒店出发 → 梵蒂冈</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">路线：地铁 B1 → Bologna 换 B → Termini 换 A 线 → Ottaviano 下（约 25 min），步行 5 min 到梵蒂冈博物馆入口（Viale Vaticano）</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">路线：地铁 B1 → Bologna 换 B → Termini 换 A 线 → Ottaviano 下（约 25 min），步行 5 min 到梵蒂冈博物馆入口（Viale Vaticano）</div></div></details>
                 </div>
               </li>
               <li class="schedule-item">
@@ -1105,9 +1119,9 @@
                 <div class="schedule-content">
                   <p class="schedule-time">15:30 – 18:00</p>
                   <p class="schedule-place">梵蒂冈博物馆 & 西斯廷礼拜堂</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">精华路线（约 2.5h）：入口 → 松果庭院 → 地图廊 → 拉斐尔房间 → 西斯廷礼拜堂（米开朗基罗天顶画《创世纪》）<br/>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">精华路线（约 2.5h）：入口 → 松果庭院 → 地图廊 → 拉斐尔房间 → 西斯廷礼拜堂（米开朗基罗天顶画《创世纪》）<br/>
                   <strong>建议游玩：2.5 小时 | 闭馆 20:00 | 最晚 18:00 入场 | 周日闭馆（26号闭馆）</strong><br/>
-                  <strong>已购票：15:30 场次 | ¥261/人（携程）| 两人合计 ¥522</strong></div></details>
+                  <strong>已购票：15:30 场次 | ¥261/人（携程）| 两人合计 ¥522</strong></div></div></details>
                   <div class="schedule-tags">
                     <span class="schedule-tag tag-art">🎨 艺术殿堂</span>
                     <span class="schedule-tag tag-book">🎫 已预约 15:30</span>
@@ -1121,8 +1135,8 @@
                 <div class="schedule-content">
                   <p class="schedule-time">18:15 – 19:00</p>
                   <p class="schedule-place">圣彼得大教堂</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">从西斯廷礼拜堂侧门直接进入（跳过排队！）。时间较晚不建议登顶，参观大教堂内部约 40 min。着装要求：遮住膝盖和肩膀<br/>
-                  <strong>建议游玩：40 min – 1 小时 | 闭馆 19:10 | 全年开放 | 免费入场</strong></div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">从西斯廷礼拜堂侧门直接进入（跳过排队！）。时间较晚不建议登顶，参观大教堂内部约 40 min。着装要求：遮住膝盖和肩膀<br/>
+                  <strong>建议游玩：40 min – 1 小时 | 闭馆 19:10 | 全年开放 | 免费入场</strong></div></div></details>
                   <span class="schedule-tag tag-must">⛪ 世界最大教堂</span>
                 </div>
               </li>
@@ -1131,9 +1145,9 @@
                 <div class="schedule-content">
                   <p class="schedule-time">19:10</p>
                   <p class="schedule-place">圣天使堡 & 圣天使桥</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">从圣彼得广场沿 Via della Conciliazione 步行 10 min 到达。此时已过 18:00 入场截止，在外欣赏圣天使桥上的天使雕塑和台伯河夜景<br/>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">从圣彼得广场沿 Via della Conciliazione 步行 10 min 到达。此时已过 18:00 入场截止，在外欣赏圣天使桥上的天使雕塑和台伯河夜景<br/>
                   <strong>建议游玩：1 小时 | 闭馆 19:30 | 最晚 18:00 停止入场 | 周一闭馆（27号闭馆）</strong><br/>
-                  <strong>门票 ¥125/人（飞猪）| 两人合计 ¥250</strong></div></details>
+                  <strong>门票 ¥125/人（飞猪）| 两人合计 ¥250</strong></div></div></details>
                   <span class="schedule-tag tag-must">🌅 桥上夜景</span>
                 </div>
               </li>
@@ -1142,7 +1156,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">20:00</p>
                   <p class="schedule-place">晚餐</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">推荐 Prati 区或 Trastevere 区。Da Enzo al 29（Cacio e Pepe 极佳）或 Bonci Pizzarium（最好的 Pizza al Taglio）</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">推荐 Prati 区或 Trastevere 区。Da Enzo al 29（Cacio e Pepe 极佳）或 Bonci Pizzarium（最好的 Pizza al Taglio）</div></div></details>
                   <span class="schedule-tag tag-food">🍝 罗马特色</span>
                 </div>
               </li>
@@ -1169,7 +1183,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">09:00 – 11:00</p>
                   <p class="schedule-place">博尔盖塞美术馆 Galleria Borghese</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">贝尼尼雕塑、卡拉瓦乔名画。每次限 2 小时参观，门票 €15+€2 预约费。建议预约上午 09:00 场次</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">贝尼尼雕塑、卡拉瓦乔名画。每次限 2 小时参观，门票 €15+€2 预约费。建议预约上午 09:00 场次</div></div></details>
                   <div class="schedule-tags">
                     <span class="schedule-tag tag-art">🎨 艺术杰作</span>
                     <span class="schedule-tag tag-book">🎫 必须预约</span>
@@ -1182,7 +1196,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">11:00 – 12:00</p>
                   <p class="schedule-place">博尔盖塞公园漫步</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">罗马最大的城市公园，绿荫小路、湖泊、露台，从美术馆出来后悠闲散步</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">罗马最大的城市公园，绿荫小路、湖泊、露台，从美术馆出来后悠闲散步</div></div></details>
                   <span class="schedule-tag tag-tip">🌳 城市绿洲</span>
                 </div>
               </li>
@@ -1191,7 +1205,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">12:00 – 13:30</p>
                   <p class="schedule-place">午餐</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">推荐 Testaccio 区 Da Remo（正宗罗马薄底 Pizza，只收现金）或 Mercato Testaccio（本地菜市场美食）</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">推荐 Testaccio 区 Da Remo（正宗罗马薄底 Pizza，只收现金）或 Mercato Testaccio（本地菜市场美食）</div></div></details>
                   <span class="schedule-tag tag-food">🍕 地道美食</span>
                 </div>
               </li>
@@ -1200,7 +1214,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">13:30 – 14:00</p>
                   <p class="schedule-place">真理之口 Bocca della Verita</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">《罗马假日》经典场景。在 Santa Maria in Cosmedin 教堂门廊下，免费但需排队拍照</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">《罗马假日》经典场景。在 Santa Maria in Cosmedin 教堂门廊下，免费但需排队拍照</div></div></details>
                   <span class="schedule-tag tag-must">🎥 电影取景地</span>
                 </div>
               </li>
@@ -1209,7 +1223,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">14:30 – 16:00</p>
                   <p class="schedule-place">纳沃纳广场 & 万神殿</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">纳沃纳广场贝尼尼四河喷泉 → 步行 5 分钟到万神殿（€5，周六免费）→ 鲜花广场 Campo de' Fiori</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">纳沃纳广场贝尼尼四河喷泉 → 步行 5 分钟到万神殿（€5，周六免费）→ 鲜花广场 Campo de' Fiori</div></div></details>
                   <div class="schedule-tags">
                     <span class="schedule-tag tag-must">🏛 古罗马奇迹</span>
                     <a href="https://pantheonroma.com/en/" target="_blank" class="booking-link-inline">🔗 万神殿购票 →</a>
@@ -1221,7 +1235,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">16:30 – 18:00</p>
                   <p class="schedule-place">人民广场 & 西班牙广场</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">人民广场方尖碑、双子教堂、登平乔山俯瞰全景 → 沿 Via del Corso 步行到西班牙广场（约 15 分钟）→ Via dei Condotti 购物街</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">人民广场方尖碑、双子教堂、登平乔山俯瞰全景 → 沿 Via del Corso 步行到西班牙广场（约 15 分钟）→ Via dei Condotti 购物街</div></div></details>
                   <span class="schedule-tag tag-must">📷 经典打卡</span>
                 </div>
               </li>
@@ -1230,7 +1244,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">18:30</p>
                   <p class="schedule-place">许愿池 Fontana di Trevi（夜景）</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">从西班牙广场步行约 10 分钟。傍晚灯光效果更美，人比白天少。背对喷泉右手扔硬币许愿</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">从西班牙广场步行约 10 分钟。傍晚灯光效果更美，人比白天少。背对喷泉右手扔硬币许愿</div></div></details>
                   <span class="schedule-tag tag-must">🌙 夜景更美</span>
                 </div>
               </li>
@@ -1239,7 +1253,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">19:30</p>
                   <p class="schedule-place">晚餐</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">推荐 Roscioli Salumeria（Carbonara 一流，需预约）或 Trastevere 区漫步找餐厅</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">推荐 Roscioli Salumeria（Carbonara 一流，需预约）或 Trastevere 区漫步找餐厅</div></div></details>
                   <span class="schedule-tag tag-food">🍝 罗马特色</span>
                 </div>
               </li>
@@ -1266,7 +1280,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">09:00 – 12:00</p>
                   <p class="schedule-place">Trastevere 区漫步</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">罗马最有生活气息的街区，鹅卵石小巷、爬满常春藤的外墙、街头艺人。推荐 Porta Portese 跳蚤市场（周日上午）</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">罗马最有生活气息的街区，鹅卵石小巷、爬满常春藤的外墙、街头艺人。推荐 Porta Portese 跳蚤市场（周日上午）</div></div></details>
                   <span class="schedule-tag tag-must">🏠 罗马慢生活</span>
                 </div>
               </li>
@@ -1275,7 +1289,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">12:00 – 13:30</p>
                   <p class="schedule-place">午餐</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">Trastevere 区 Da Enzo al 29（Cacio e Pepe 极佳）或附近小餐馆</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">Trastevere 区 Da Enzo al 29（Cacio e Pepe 极佳）或附近小餐馆</div></div></details>
                   <span class="schedule-tag tag-food">🍝 地道美食</span>
                 </div>
               </li>
@@ -1284,8 +1298,8 @@
                 <div class="schedule-content">
                   <p class="schedule-time">14:00 – 17:00</p>
                   <p class="schedule-place">斗兽场 & 古罗马广场 & 帕拉丁山</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">联票 €16（含斗兽场+古罗马广场+帕拉丁山）。建议先进斗兽场（14:00 入场），之后游览古罗马广场和帕拉丁山俯瞰全景<br/>
-                  <strong>已购票：14:00 场次 | 两人合计 €32</strong></div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">联票 €16（含斗兽场+古罗马广场+帕拉丁山）。建议先进斗兽场（14:00 入场），之后游览古罗马广场和帕拉丁山俯瞰全景<br/>
+                  <strong>已购票：14:00 场次 | 两人合计 €32</strong></div></div></details>
                   <div class="schedule-tags">
                     <span class="schedule-tag tag-must">🏛 必打卡</span>
                     <span class="schedule-tag tag-book">🎫 已预约 14:00</span>
@@ -1297,7 +1311,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">17:30 – 18:30</p>
                   <p class="schedule-place">自由漫步 / 购物</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">Via del Corso 购物街，或者回酒店附近休息一下，为明天一日游养精蓄锐</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">Via del Corso 购物街，或者回酒店附近休息一下，为明天一日游养精蓄锐</div></div></details>
                   <span class="schedule-tag tag-tip">🛍 自由时间</span>
                 </div>
               </li>
@@ -1306,7 +1320,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">19:30</p>
                   <p class="schedule-place">晚餐 — 最后的罗马之夜</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">推荐 Bonci Pizzarium（最好的 Pizza al Taglio）或 Trastevere 区找一家心仪的餐厅</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">推荐 Bonci Pizzarium（最好的 Pizza al Taglio）或 Trastevere 区找一家心仪的餐厅</div></div></details>
                   <span class="schedule-tag tag-food">🍝 告别罗马</span>
                 </div>
               </li>
@@ -1367,7 +1381,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">07:00 – 08:00</p>
                   <p class="schedule-place">罗马集合出发</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">一日游团通常在罗马 Termini 站或市中心集合点出发，车程约 2.5-3 小时到达托斯卡纳</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">一日游团通常在罗马 Termini 站或市中心集合点出发，车程约 2.5-3 小时到达托斯卡纳</div></div></details>
                   <span class="schedule-tag tag-book">🎫 提前预订</span>
                 </div>
               </li>
@@ -1376,7 +1390,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">10:00 – 12:00</p>
                   <p class="schedule-place">锡耶纳 Siena</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">田野广场（Piazza del Campo，世界最美广场之一）→ 锡耶纳大教堂（黑白大理石外观震撼）→ 中世纪巷弄漫步</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">田野广场（Piazza del Campo，世界最美广场之一）→ 锡耶纳大教堂（黑白大理石外观震撼）→ 中世纪巷弄漫步</div></div></details>
                   <span class="schedule-tag tag-must">🏰 中世纪瑰宝</span>
                 </div>
               </li>
@@ -1385,7 +1399,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">12:30</p>
                   <p class="schedule-place">基安蒂酒庄品酒 + 午餐</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">品尝 Chianti Classico DOCG，配托斯卡纳传统美食</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">品尝 Chianti Classico DOCG，配托斯卡纳传统美食</div></div></details>
                   <span class="schedule-tag tag-food">🍷 酒庄体验</span>
                 </div>
               </li>
@@ -1394,7 +1408,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">14:30 – 16:30</p>
                   <p class="schedule-place">圣吉米尼亚诺 San Gimignano</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">"中世纪曼哈顿"14座塔楼。水井广场 → Torre Grossa 登顶远眺 → Gelateria Dondoli 冠军冰淇淋</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">"中世纪曼哈顿"14座塔楼。水井广场 → Torre Grossa 登顶远眺 → Gelateria Dondoli 冠军冰淇淋</div></div></details>
                   <span class="schedule-tag tag-must">🍦 世界冠军冰淇淋</span>
                 </div>
               </li>
@@ -1403,7 +1417,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">18:00 – 20:00</p>
                   <p class="schedule-place">返回罗马</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">大巴返程约 2.5-3 小时回到罗马市中心，为明天飞尼斯做准备</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">大巴返程约 2.5-3 小时回到罗马市中心，为明天飞尼斯做准备</div></div></details>
                   <span class="schedule-tag tag-tip">🚌 返回罗马</span>
                 </div>
               </li>
@@ -1457,7 +1471,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">下午</p>
                   <p class="schedule-place">尼斯老城区 Vieux Nice</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">色彩斑斓的意式建筑、萨雷亚市场、冰淇淋店</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">色彩斑斓的意式建筑、萨雷亚市场、冰淇淋店</div></div></details>
                   <span class="schedule-tag tag-must">🏠 漫步老城</span>
                 </div>
               </li>
@@ -1466,7 +1480,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">傍晚</p>
                   <p class="schedule-place">英国人大道 Promenade des Anglais</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">蔚蓝海岸线漫步、天使湾日落、蓝色椅子上发呆</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">蔚蓝海岸线漫步、天使湾日落、蓝色椅子上发呆</div></div></details>
                   <span class="schedule-tag tag-must">🌅 地中海日落</span>
                 </div>
               </li>
@@ -1493,7 +1507,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">上午</p>
                   <p class="schedule-place">埃兹 Èze 鹰巢村</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">悬崖上的中世纪小镇、仙人掌花园、俯瞰地中海</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">悬崖上的中世纪小镇、仙人掌花园、俯瞰地中海</div></div></details>
                   <span class="schedule-tag tag-must">🏔 悬崖小镇</span>
                 </div>
               </li>
@@ -1502,7 +1516,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">下午</p>
                   <p class="schedule-place">摩纳哥 Monaco</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">蒙特卡洛赌场、亲王宫殿、F1 赛道、奢华游艇港</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">蒙特卡洛赌场、亲王宫殿、F1 赛道、奢华游艇港</div></div></details>
                   <span class="schedule-tag tag-must">🏰 富豪国度</span>
                 </div>
               </li>
@@ -1511,7 +1525,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">17:00</p>
                   <p class="schedule-place">返回尼斯</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">乘火车约 20 分钟返回（TER，约 €4）。晚餐推荐 Chez Pipo（港口附近 Socca 名店）</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">乘火车约 20 分钟返回（TER，约 €4）。晚餐推荐 Chez Pipo（港口附近 Socca 名店）</div></div></details>
                   <span class="schedule-tag tag-food">🍽 尼斯特色</span>
                 </div>
               </li>
@@ -1538,7 +1552,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">09:00</p>
                   <p class="schedule-place">火车前往昂蒂布 Antibes</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">TER 火车约 25 分钟，昂蒂布有蔚蓝海岸最美的老城之一</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">TER 火车约 25 分钟，昂蒂布有蔚蓝海岸最美的老城之一</div></div></details>
                 </div>
               </li>
               <li class="schedule-item">
@@ -1546,7 +1560,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">09:30 – 12:00</p>
                   <p class="schedule-place">毕加索博物馆 & 昂蒂布老城</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">毕加索博物馆设在格里马尔迪城堡中，面朝大海。普罗旺斯市场和老城小巷。Port Vauban 世界最大游艇港之一</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">毕加索博物馆设在格里马尔迪城堡中，面朝大海。普罗旺斯市场和老城小巷。Port Vauban 世界最大游艇港之一</div></div></details>
                   <span class="schedule-tag tag-art">🎨 毕加索</span>
                 </div>
               </li>
@@ -1555,7 +1569,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">12:30</p>
                   <p class="schedule-place">火车前往戛纳 Cannes</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">从昂蒂布乘 TER 约 15 分钟。在苏凯老城区找一家海景餐厅午餐</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">从昂蒂布乘 TER 约 15 分钟。在苏凯老城区找一家海景餐厅午餐</div></div></details>
                   <span class="schedule-tag tag-food">🍽 海景午餐</span>
                 </div>
               </li>
@@ -1564,7 +1578,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">14:30 – 17:00</p>
                   <p class="schedule-place">十字大道 La Croisette & 电影宫</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">戛纳海滨大道漫步，奢侈品牌林立。电影宫红毯台阶打卡。登苏凯老城俯瞰海港</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">戛纳海滨大道漫步，奢侈品牌林立。电影宫红毯台阶打卡。登苏凯老城俯瞰海港</div></div></details>
                   <span class="schedule-tag tag-must">🎬 电影圣地</span>
                 </div>
               </li>
@@ -1573,7 +1587,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">17:30</p>
                   <p class="schedule-place">返回尼斯</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">火车约 30-40 分钟返回。傍晚在英国人漫步大道看最后一次日落</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">火车约 30-40 分钟返回。傍晚在英国人漫步大道看最后一次日落</div></div></details>
                   <span class="schedule-tag tag-must">🌅 日落</span>
                 </div>
               </li>
@@ -1600,7 +1614,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">09:00 – 11:00</p>
                   <p class="schedule-place">夏加尔美术馆 或 马蒂斯美术馆</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">夏加尔美术馆（€8）：全球最大夏加尔收藏。或马蒂斯美术馆（€10）：Cimiez 区17世纪别墅中。根据航班时间二选一</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">夏加尔美术馆（€8）：全球最大夏加尔收藏。或马蒂斯美术馆（€10）：Cimiez 区17世纪别墅中。根据航班时间二选一</div></div></details>
                   <div class="schedule-tags">
                     <span class="schedule-tag tag-art">🎨 艺术</span>
                     <a href="https://www.musees-nationaux-alpesmaritimes.fr/chagall" target="_blank" class="booking-link-inline">🔗 夏加尔 →</a>
@@ -1612,7 +1626,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">11:00 – 12:30</p>
                   <p class="schedule-place">Jean Medecin 大道购物 & 伴手礼</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">老佛爷百货、老城买普罗旺斯香皂/橄榄油/薰衣草制品。Alziari 橄榄油（百年老店）</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">老佛爷百货、老城买普罗旺斯香皂/橄榄油/薰衣草制品。Alziari 橄榄油（百年老店）</div></div></details>
                   <span class="schedule-tag tag-tip">🛍 购物</span>
                 </div>
               </li>
@@ -1621,7 +1635,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">12:30</p>
                   <p class="schedule-place">最后一顿尼斯午餐</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">Le Safari（Cours Saleya）或心仪的餐厅，享受最后的地中海时光</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">Le Safari（Cours Saleya）或心仪的餐厅，享受最后的地中海时光</div></div></details>
                   <span class="schedule-tag tag-food">🍽 告别尼斯</span>
                 </div>
               </li>
@@ -1630,7 +1644,7 @@
                 <div class="schedule-content">
                   <p class="schedule-time">下午</p>
                   <p class="schedule-place">前往尼斯机场 NCE</p>
-                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note">T2 有轨电车到机场（30 分钟，€1.50）。退税：海关柜台在安检前！先盖章再托运。国际航班提前 2.5 小时到达</div></details>
+                  <details class="schedule-details"><summary class="schedule-summary">详情</summary><div class="schedule-note-wrap"><div class="schedule-note">T2 有轨电车到机场（30 分钟，€1.50）。退税：海关柜台在安检前！先盖章再托运。国际航班提前 2.5 小时到达</div></div></details>
                   <span class="schedule-tag tag-tip">✈ 退税别忘了！</span>
                 </div>
               </li>
@@ -2010,6 +2024,27 @@
     
     // Initialize
     loadState();
+
+    // Desktop: hover to expand schedule details
+    var isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (!isTouch) {
+      document.querySelectorAll('.schedule-item').forEach(function(item) {
+        var details = item.querySelector('.schedule-details');
+        if (!details) return;
+        var timer = null;
+
+        item.addEventListener('mouseenter', function() {
+          clearTimeout(timer);
+          details.setAttribute('open', '');
+        });
+
+        item.addEventListener('mouseleave', function() {
+          timer = setTimeout(function() {
+            details.removeAttribute('open');
+          }, 200);
+        });
+      });
+    }
   });
 </script>
 
