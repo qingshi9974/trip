@@ -268,11 +268,214 @@
     details { display: block; }
     summary { display: list-item; cursor: pointer; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Lato', sans-serif;
       background: var(--cream);
       color: var(--text);
       overflow-x: hidden;
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.12);
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    .scroll-progress-bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), #f7d794, var(--nice));
+      box-shadow: 0 0 18px rgba(201,169,110,0.45);
+      transition: width 0.12s linear;
+    }
+
+    .day-nav {
+      position: sticky;
+      top: 16px;
+      z-index: 120;
+      max-width: 1100px;
+      margin: 18px auto 0;
+      padding: 0 16px;
+    }
+
+    .day-nav-inner {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.55);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(15,52,96,0.12);
+      scrollbar-width: none;
+    }
+
+    .day-nav-inner::-webkit-scrollbar { display: none; }
+
+    .day-nav-link {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 72px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #667085;
+      background: transparent;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .day-nav-link:hover {
+      color: var(--dark);
+      background: rgba(15,52,96,0.07);
+      transform: translateY(-1px);
+    }
+
+    .day-nav-link.active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--dark), #0f3460);
+      box-shadow: 0 8px 18px rgba(15,52,96,0.2);
+    }
+
+    .day-card[id] { scroll-margin-top: 110px; }
+
+    .back-to-top {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 52px;
+      height: 52px;
+      border: none;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), #f7d794);
+      color: var(--dark);
+      box-shadow: 0 12px 24px rgba(15,52,96,0.2);
+      cursor: pointer;
+      font-size: 1.3rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px) scale(0.96);
+      transition: opacity 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+      z-index: 140;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 16px 28px rgba(15,52,96,0.24);
+    }
+
+    .ticket-complete-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 92px;
+      transform: translate(-50%, 14px);
+      background: rgba(15,52,96,0.94);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 999px;
+      box-shadow: 0 14px 28px rgba(15,52,96,0.28);
+      font-size: 0.86rem;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.24s ease, transform 0.24s ease;
+      z-index: 150;
+      white-space: nowrap;
+    }
+
+    .ticket-complete-toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .emoji-burst {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 149;
+    }
+
+    .emoji-piece {
+      position: fixed;
+      left: 50%;
+      top: 58%;
+      transform: translate(-50%, -50%);
+      animation: emojiBurst 1.15s ease-out forwards;
+      will-change: transform, opacity;
+    }
+
+    @keyframes emojiBurst {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+      }
+      12% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.15) rotate(var(--rot));
+      }
+    }
+
+    .js-enhanced .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(28px) scale(0.985);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+      will-change: opacity, transform;
+    }
+
+    .js-enhanced .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .schedule-content.is-clickable {
+      cursor: pointer;
+    }
+
+    .schedule-content.is-clickable .schedule-place,
+    .schedule-content.is-clickable .schedule-time {
+      transition: color 0.18s ease;
+    }
+
+    .schedule-content.is-clickable:hover .schedule-place {
+      color: var(--gold);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .scroll-progress-bar,
+      .day-nav-link,
+      .back-to-top,
+      .ticket-complete-toast,
+      .schedule-summary,
+      .schedule-summary::after,
+      .day-card,
+      .js-enhanced .reveal-on-scroll,
+      .emoji-piece {
+        transition: none !important;
+        animation: none !important;
+      }
     }
 
     /* Hero */
@@ -966,11 +1169,17 @@
       .tips-grid { grid-template-columns: 1fr; }
       .transport-grid { grid-template-columns: 1fr; }
       .checklist-summary { flex-direction: column; text-align: center; }
+      .day-nav { top: 10px; padding: 0 12px; }
+      .day-nav-inner { gap: 8px; padding: 8px; border-radius: 20px; }
+      .day-nav-link { min-width: 60px; padding: 9px 12px; font-size: 0.74rem; }
+      .ticket-complete-toast { width: calc(100vw - 28px); max-width: 360px; text-align: center; white-space: normal; }
+      .back-to-top { right: 16px; bottom: 18px; width: 48px; height: 48px; }
       section { padding: 50px 14px; }
     }
   </style>
 </head>
 <body>
+<div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-bar" id="scroll-progress-bar"></div></div>
 
 <!-- Hero -->
 <section class="hero">
@@ -1015,6 +1224,19 @@
     <div class="overview-label">打卡景点</div>
   </div>
 </div>
+
+<nav class="day-nav" aria-label="每日行程快捷导航">
+  <div class="day-nav-inner">
+    <a class="day-nav-link active" href="#day-1" data-target="day-1">D1 罗马</a>
+    <a class="day-nav-link" href="#day-2" data-target="day-2">D2 罗马</a>
+    <a class="day-nav-link" href="#day-3" data-target="day-3">D3 罗马</a>
+    <a class="day-nav-link" href="#day-4" data-target="day-4">D4 托斯卡纳</a>
+    <a class="day-nav-link" href="#day-5" data-target="day-5">D5 尼斯</a>
+    <a class="day-nav-link" href="#day-6" data-target="day-6">D6 尼斯</a>
+    <a class="day-nav-link" href="#day-7" data-target="day-7">D7 尼斯</a>
+    <a class="day-nav-link" href="#day-8" data-target="day-8">D8 尼斯</a>
+  </div>
+</nav>
 
 <!-- Main Itinerary -->
 <section style="background: var(--cream);">
@@ -1068,7 +1290,7 @@
       <div class="days-grid">
 
         <!-- Day 1 -->
-        <div class="day-card">
+        <div class="day-card" id="day-1">
           <div class="day-card-header">
             <div class="day-number rome-bg">
               <span class="month">APR</span>
@@ -1165,7 +1387,7 @@
         </div>
 
         <!-- Day 2 -->
-        <div class="day-card">
+        <div class="day-card" id="day-2">
           <div class="day-card-header">
             <div class="day-number rome-bg">
               <span class="month">APR</span>
@@ -1262,7 +1484,7 @@
         </div>
 
         <!-- Day 3 -->
-        <div class="day-card">
+        <div class="day-card" id="day-3">
           <div class="day-card-header">
             <div class="day-number rome-bg">
               <span class="month">APR</span>
@@ -1363,7 +1585,7 @@
       <div class="days-grid">
 
         <!-- Day 4 -->
-        <div class="day-card">
+        <div class="day-card" id="day-4">
           <div class="day-card-header">
             <div class="day-number tuscany-bg">
               <span class="month">APR</span>
@@ -1453,7 +1675,7 @@
       <div class="days-grid">
 
         <!-- Day 5 -->
-        <div class="day-card">
+        <div class="day-card" id="day-5">
           <div class="day-card-header">
             <div class="day-number nice-bg">
               <span class="month">APR</span>
@@ -1489,7 +1711,7 @@
         </div>
 
         <!-- Day 6 -->
-        <div class="day-card">
+        <div class="day-card" id="day-6">
           <div class="day-card-header">
             <div class="day-number nice-bg">
               <span class="month">APR</span>
@@ -1534,7 +1756,7 @@
         </div>
 
         <!-- Day 7 -->
-        <div class="day-card">
+        <div class="day-card" id="day-7">
           <div class="day-card-header">
             <div class="day-number nice-bg">
               <span class="month">MAY</span>
@@ -1596,7 +1818,7 @@
         </div>
 
         <!-- Day 8 -->
-        <div class="day-card">
+        <div class="day-card" id="day-8">
           <div class="day-card-header">
             <div class="day-number nice-bg">
               <span class="month">MAY</span>
@@ -1961,17 +2183,65 @@
   <p style="margin-top: 8px;">祝你们旅途愉快！Buon Viaggio! Bon Voyage!</p>
 </footer>
 
+<button class="back-to-top" id="back-to-top" type="button" aria-label="返回顶部">🍔</button>
+<div class="ticket-complete-toast" id="ticket-complete-toast">🎉 门票都搞定啦，准备出发！</div>
+
 <script>
-  // Ticket Checklist Progress
   document.addEventListener('DOMContentLoaded', function() {
-    const totalTickets = 8;
+    document.body.classList.add('js-enhanced');
+
+    const root = document.documentElement;
     const progressFill = document.getElementById('progress-fill');
     const progressText = document.getElementById('progress-text');
-    
-    // Load saved state from localStorage
+    const pageProgressBar = document.getElementById('scroll-progress-bar');
+    const backToTopBtn = document.getElementById('back-to-top');
+    const ticketToast = document.getElementById('ticket-complete-toast');
+    const ticketCheckboxes = Array.from(document.querySelectorAll('.ticket-item input[type="checkbox"]'));
+    const dayCards = Array.from(document.querySelectorAll('.day-card[id]'));
+    const dayLinks = Array.from(document.querySelectorAll('.day-nav-link'));
+    const totalTickets = ticketCheckboxes.length;
+    let completionCelebrated = false;
+    let toastTimer = null;
+    let ticking = false;
+    let activeDayId = dayCards.length ? dayCards[0].id : '';
+
+    function updateTicketItemStyle(checkbox) {
+      const ticketItem = checkbox.closest('.ticket-item');
+      if (!ticketItem) return;
+      ticketItem.classList.toggle('booked', checkbox.checked);
+    }
+
+    function getCheckedCount() {
+      return ticketCheckboxes.filter(function(checkbox) {
+        return checkbox.checked;
+      }).length;
+    }
+
+    function updateProgress() {
+      const checkedCount = getCheckedCount();
+      const percentage = totalTickets ? (checkedCount / totalTickets) * 100 : 0;
+      if (progressFill) progressFill.style.width = percentage + '%';
+      if (progressText) progressText.textContent = checkedCount + ' / ' + totalTickets;
+      return checkedCount;
+    }
+
+    function saveState() {
+      const checked = ticketCheckboxes.filter(function(checkbox) {
+        return checkbox.checked;
+      }).map(function(checkbox) {
+        return checkbox.id.replace('ticket-', '');
+      });
+      localStorage.setItem('travelTickets', JSON.stringify(checked));
+    }
+
     function loadState() {
       const saved = localStorage.getItem('travelTickets');
-      if (saved) {
+      if (!saved) {
+        updateProgress();
+        return;
+      }
+
+      try {
         const tickets = JSON.parse(saved);
         tickets.forEach(function(ticketId) {
           const checkbox = document.getElementById('ticket-' + ticketId);
@@ -1980,71 +2250,154 @@
             updateTicketItemStyle(checkbox);
           }
         });
-        updateProgress();
+      } catch (error) {
+        localStorage.removeItem('travelTickets');
       }
+
+      updateProgress();
     }
-    
-    // Save state to localStorage
-    function saveState() {
-      const checked = [];
-      document.querySelectorAll('.ticket-item input[type="checkbox"]').forEach(function(cb) {
-        if (cb.checked) {
-          checked.push(cb.id.replace('ticket-', ''));
+
+    function createEmojiBurst() {
+      const burst = document.createElement('div');
+      burst.className = 'emoji-burst';
+      const emojis = ['🍔', '🥟', '✈️', '🎉', '💛', '🧳'];
+
+      for (let i = 0; i < 24; i += 1) {
+        const piece = document.createElement('span');
+        piece.className = 'emoji-piece';
+        piece.textContent = emojis[i % emojis.length];
+        piece.style.fontSize = (1 + Math.random() * 0.8).toFixed(2) + 'rem';
+        piece.style.setProperty('--dx', (Math.random() * 360 - 180).toFixed(0) + 'px');
+        piece.style.setProperty('--dy', (-120 - Math.random() * 260).toFixed(0) + 'px');
+        piece.style.setProperty('--rot', (Math.random() * 260 - 130).toFixed(0) + 'deg');
+        piece.style.animationDelay = (Math.random() * 0.12).toFixed(2) + 's';
+        burst.appendChild(piece);
+      }
+
+      document.body.appendChild(burst);
+      window.setTimeout(function() {
+        burst.remove();
+      }, 1400);
+    }
+
+    function celebrateCompletion() {
+      if (!ticketToast) return;
+      ticketToast.classList.remove('show');
+      void ticketToast.offsetWidth;
+      ticketToast.classList.add('show');
+      createEmojiBurst();
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(function() {
+        ticketToast.classList.remove('show');
+      }, 2200);
+    }
+
+    function setActiveDay(id) {
+      if (!id) return;
+      activeDayId = id;
+      dayLinks.forEach(function(link) {
+        link.classList.toggle('active', link.dataset.target === id);
+      });
+    }
+
+    function updateScrollUI() {
+      const maxScroll = root.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
+      if (pageProgressBar) pageProgressBar.style.width = progress + '%';
+      if (backToTopBtn) backToTopBtn.classList.toggle('visible', window.scrollY > 480);
+
+      let currentDayId = dayCards.length ? dayCards[0].id : '';
+      dayCards.forEach(function(card) {
+        if (card.getBoundingClientRect().top <= window.innerHeight * 0.35) {
+          currentDayId = card.id;
         }
       });
-      localStorage.setItem('travelTickets', JSON.stringify(checked));
-    }
-    
-    // Update progress bar and text
-    function updateProgress() {
-      const checkedCount = document.querySelectorAll('.ticket-item input[type="checkbox"]:checked').length;
-      const percentage = (checkedCount / totalTickets) * 100;
-      progressFill.style.width = percentage + '%';
-      progressText.textContent = checkedCount + ' / ' + totalTickets;
-    }
-    
-    // Update ticket item visual style
-    function updateTicketItemStyle(checkbox) {
-      const ticketItem = checkbox.closest('.ticket-item');
-      if (checkbox.checked) {
-        ticketItem.classList.add('booked');
-      } else {
-        ticketItem.classList.remove('booked');
+
+      if (currentDayId !== activeDayId) {
+        setActiveDay(currentDayId);
       }
     }
-    
-    // Add event listeners to all checkboxes
-    document.querySelectorAll('.ticket-item input[type="checkbox"]').forEach(function(checkbox) {
-      checkbox.addEventListener('change', function() {
-        updateTicketItemStyle(this);
-        updateProgress();
-        saveState();
-      });
-    });
-    
-    // Initialize
-    loadState();
 
-    // Desktop: hover to expand schedule details
-    var isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    if (!isTouch) {
-      document.querySelectorAll('.schedule-item').forEach(function(item) {
-        var details = item.querySelector('.schedule-details');
-        if (!details) return;
-        var timer = null;
-
-        item.addEventListener('mouseenter', function() {
-          clearTimeout(timer);
-          details.setAttribute('open', '');
-        });
-
-        item.addEventListener('mouseleave', function() {
-          timer = setTimeout(function() {
-            details.removeAttribute('open');
-          }, 200);
-        });
+    function requestScrollUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function() {
+        updateScrollUI();
+        ticking = false;
       });
     }
+
+    ticketCheckboxes.forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+        updateTicketItemStyle(this);
+        const checkedCount = updateProgress();
+        saveState();
+
+        const isComplete = totalTickets > 0 && checkedCount === totalTickets;
+        if (isComplete && !completionCelebrated) {
+          celebrateCompletion();
+          completionCelebrated = true;
+        }
+        if (!isComplete) {
+          completionCelebrated = false;
+        }
+      });
+    });
+
+    document.querySelectorAll('.schedule-item').forEach(function(item) {
+      const details = item.querySelector('.schedule-details');
+      const content = item.querySelector('.schedule-content');
+      if (!details || !content) return;
+      content.classList.add('is-clickable');
+      content.addEventListener('click', function(event) {
+        if (event.target.closest('a, button, input, label, summary')) return;
+        if (event.target.closest('.schedule-note')) return;
+        if (details.hasAttribute('open')) {
+          details.removeAttribute('open');
+        } else {
+          details.setAttribute('open', '');
+        }
+      });
+    });
+
+    const revealTargets = document.querySelectorAll('.overview-item, .arrival-notice, .rome-map-card, .day-card, .checklist-summary, .ticket-group, .tip-card, .transport-card');
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, {
+        threshold: 0.14,
+        rootMargin: '0px 0px -8% 0px'
+      });
+
+      revealTargets.forEach(function(element, index) {
+        element.classList.add('reveal-on-scroll');
+        element.style.transitionDelay = ((index % 4) * 60) + 'ms';
+        revealObserver.observe(element);
+      });
+    }
+
+    dayLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        setActiveDay(link.dataset.target);
+      });
+    });
+
+    if (backToTopBtn) {
+      backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    loadState();
+    completionCelebrated = totalTickets > 0 && getCheckedCount() === totalTickets;
+    updateScrollUI();
+
+    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+    window.addEventListener('resize', requestScrollUpdate);
   });
 </script>
 
